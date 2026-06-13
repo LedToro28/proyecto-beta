@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InmoYa | Nosotros</title>
+    <link rel="stylesheet" href="/css/nosotros.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="hamburger" id="hamburgerBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo"><i class="fa-solid fa-house-chimney"></i> <span>InmoYa</span></div>
+        <div class="nav-links">
+            <a href="/"><i class="fa-solid fa-home"></i> Inicio</a>
+            <a href="/propiedades"><i class="fa-solid fa-building"></i> Propiedades</a>
+            <a href="/agencias"><i class="fa-solid fa-building-user"></i> Agencias</a>
+            <a href="/nosotros" class="active"><i class="fa-solid fa-users"></i> Nosotros</a>
+            <a href="/contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
+        </div>
+        <div class="user-profile" id="loginPrompt">
+            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info"><strong>Invitado</strong><span>Inicia sesión</span></div>
+            <a href="/ingresar" class="btn-logout"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        </div>
+        <div class="user-profile" id="userProfile" style="display: none;">
+            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info"><strong id="userName"></strong><span id="userRole"></span></div>
+            <button id="logoutBtn" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <section class="about-hero">
+            <h1>Nosotros</h1>
+            <p>Conoce la plataforma que conecta personas con el hogar de sus sueños</p>
+        </section>
+
+        <section class="mission-vision">
+            <div class="mv-container">
+                <div class="mv-card">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <h3>Misión</h3>
+                    <p>Facilitar la búsqueda de inmuebles a nivel nacional, ofreciendo una plataforma confiable, moderna y accesible para compradores, vendedores e inmobiliarias.</p>
+                </div>
+                <div class="mv-card">
+                    <i class="fa-solid fa-eye"></i>
+                    <h3>Visión</h3>
+                    <p>Ser el ecosistema inmobiliario líder en Latinoamérica, transformando la experiencia de alquilar, vender o comprar una propiedad.</p>
+                </div>
+                <div class="mv-card">
+                    <i class="fa-solid fa-heart"></i>
+                    <h3>Valores</h3>
+                    <p>Transparencia, innovación, compromiso con el cliente, integridad y trabajo en equipo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="team-section">
+            <h2>Nuestro Equipo</h2>
+            <p class="subtitle">Profesionales apasionados por el sector inmobiliario</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="CEO">
+                    <h3>Carlos Méndez</h3>
+                    <span>CEO & Fundador</span>
+                    <p>+10 años de experiencia en tecnología y bienes raíces.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Directora">
+                    <h3>María Fernández</h3>
+                    <span>Directora de Operaciones</span>
+                    <p>Especialista en expansión y relaciones con agencias.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Desarrollador">
+                    <h3>Javier Rojas</h3>
+                    <span>Líder de Desarrollo</span>
+                    <p>Apasionado por la arquitectura de software y UX.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <i class="fa-solid fa-building"></i>
+                    <h3>+500</h3>
+                    <p>Propiedades publicadas</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fa-solid fa-handshake"></i>
+                    <h3>+50</h3>
+                    <p>Agencias aliadas</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>+10k</h3>
+                    <p>Clientes satisfechos</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 InmoYa - Tu hogar nos importa</p>
+        </footer>
+    </main>
+
+    <script src="/js/session.js"></script>
+    <script src="/js/nosotros.js"></script>
+</body>
+</html>

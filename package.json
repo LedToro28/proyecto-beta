@@ -1,0 +1,19 @@
+{
+  "name": "inmonacional",
+  "version": "1.0.0",
+  "description": "Sistema inmobiliario con roles",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "init-db": "node initDB.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "sqlite3": "^5.1.6",
+    "bcrypt": "^5.1.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
+    "dotenv": "^16.3.1"
+  }
+}

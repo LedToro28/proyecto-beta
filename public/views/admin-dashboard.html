@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | InmoYa</title>
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="hamburger" id="hamburgerBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo"><i class="fa-solid fa-house-chimney"></i> <span>InmoYa</span></div>
+        <div class="nav-links">
+            <a href="#" data-section="agencies" class="active"><i class="fa-solid fa-building"></i> Gestionar Agencias</a>
+            <a href="#" data-section="register"><i class="fa-solid fa-user-plus"></i> Registrar Agencia</a>
+        </div>
+        <div class="stats-sidebar" id="statsSidebar">
+            <p><strong>📊 Estadísticas</strong></p>
+            <p><i class="fa-solid fa-building"></i> Agencias: <span id="statAgencies">-</span></p>
+            <p><i class="fa-solid fa-house"></i> Propiedades: <span id="statProperties">-</span></p>
+            <p><i class="fa-solid fa-users"></i> Usuarios: <span id="statUsers">-</span></p>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar"><i class="fa-solid fa-user-shield"></i></div>
+            <div class="user-info"><strong>Administrador</strong><span>admin</span></div>
+            <button id="logoutBtn" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Sección: Gestionar Agencias -->
+        <div id="agencies-section" class="section active">
+            <h1>Gestión de Agencias</h1>
+            <div id="agenciesList" class="agencies-list">Cargando...</div>
+        </div>
+
+        <!-- Sección: Registrar Agencia -->
+        <div id="register-section" class="section">
+            <h1>Registrar Nueva Agencia</h1>
+            <form id="registerAgencyForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Nombre de la agencia *</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" name="phone">
+                </div>
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <input type="text" name="address">
+                </div>
+                <div class="form-group">
+                    <label>Usuario para la agencia *</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña *</label>
+                    <input type="password" name="password" id="password" required>
+                    <small>Mínimo 6 caracteres</small>
+                </div>
+                <div class="form-group">
+                    <label>Confirmar contraseña *</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required>
+                </div>
+                <div class="form-group">
+                    <label>Logo</label>
+                    <input type="file" name="logo" accept="image/*" id="logoInput">
+                    <div id="logoPreview" class="preview"></div>
+                </div>
+                <div class="form-group">
+                    <label>Foto de portada</label>
+                    <input type="file" name="cover" accept="image/*" id="coverInput">
+                    <div id="coverPreview" class="preview"></div>
+                </div>
+                <button type="submit" class="btn-primary">Registrar Agencia</button>
+                <div id="registerFeedback" class="feedback"></div>
+            </form>
+        </div>
+    </main>
+
+    <script src="/js/session.js"></script>
+    <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

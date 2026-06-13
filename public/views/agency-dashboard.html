@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Agencia | InmoYa</title>
+    <link rel="stylesheet" href="/css/agency-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="hamburger" id="hamburgerBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo"><i class="fa-solid fa-house-chimney"></i> <span>InmoYa</span></div>
+        <div class="nav-links">
+            <a href="#" data-section="properties" class="active"><i class="fa-solid fa-building"></i> Mis Propiedades</a>
+            <a href="#" data-section="add-property"><i class="fa-solid fa-plus"></i> Agregar Propiedad</a>
+            <a href="#" data-section="messages"><i class="fa-solid fa-envelope"></i> Buzón de Mensajes</a>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar"><i class="fa-solid fa-building-user"></i></div>
+            <div class="user-info"><strong id="userName">Agencia</strong><span id="userRole"></span></div>
+            <button id="logoutBtn" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Encabezado de perfil (estilo Facebook) -->
+        <div class="profile-header">
+            <div class="cover-photo">
+                <img id="coverImage" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80" alt="Cover">
+            </div>
+            <div class="profile-avatar">
+                <img id="avatarImage" src="https://via.placeholder.com/120?text=Logo" alt="Logo">
+            </div>
+        </div>
+
+        <div class="agency-info">
+            <div class="agency-name" id="agencyName">Cargando...</div>
+            <div class="agency-details" id="agencyDetails"></div>
+            <button class="edit-profile-btn" id="editProfileBtn"><i class="fa-regular fa-pen-to-square"></i> Editar perfil</button>
+        </div>
+
+        <!-- Secciones dinámicas -->
+        <div id="properties-section" class="section active">
+            <h3>Mis Propiedades</h3>
+            <div id="propertiesList" class="properties-list">Cargando propiedades...</div>
+        </div>
+
+        <div id="add-property-section" class="section">
+            <h3>Agregar Propiedad</h3>
+            <div class="add-property-form">
+                <form id="addPropertyForm" enctype="multipart/form-data">
+                    <div class="form-group"><label>Título *</label><input type="text" name="title" required></div>
+                    <div class="form-group"><label>Descripción</label><textarea name="description" rows="2"></textarea></div>
+                    <div class="form-group"><label>Operación *</label><select name="operation"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+                    <div class="form-group"><label>Precio *</label><input type="number" step="0.01" name="price" required></div>
+                    <div class="form-group"><label>Ubicación *</label><input type="text" name="location" required></div>
+                    <div class="form-group"><label>Habitaciones</label><input type="number" name="rooms"></div>
+                    <div class="form-group"><label>Baños</label><input type="number" name="baths"></div>
+                    <div class="form-group"><label>Área (m²)</label><input type="number" name="area"></div>
+                    <div class="form-group"><label>Imágenes (hasta 6)</label><input type="file" name="images" multiple accept="image/*"></div>
+                    <button type="submit" class="btn-primary">Publicar propiedad</button>
+                    <div id="addPropertyFeedback" class="feedback"></div>
+                </form>
+            </div>
+        </div>
+
+        <div id="messages-section" class="section">
+            <h3>Buzón de Mensajes</h3>
+            <div id="messagesList" class="messages-list">Cargando mensajes...</div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 InmoYa - Tu hogar nos importa</p>
+        </footer>
+    </main>
+
+    <!-- Modal (Instagram style) -->
+    <div id="propertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="carousel">
+                        <div class="carousel-images" id="carouselImages"></div>
+                        <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+                        <button class="carousel-btn next" id="nextBtn">&#10095;</button>
+                    </div>
+                </div>
+                <div class="modal-info" id="modalInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/session.js"></script>
+    <script src="/js/agency-dashboard.js"></script>
+</body>
+</html>
