@@ -169,11 +169,68 @@ Al iniciar el entorno de desarrollo (la DB ya existe):
 
 Acceder a: `http://localhost:5173`
 
+## [2026-06-22 ~23:00] - Build de Producción y Deploy en Render
+
+### Paso 7: Preparación para producción
+- **Build de React:** Ejecutado `pnpm build` en `frontend-react/`, generando los archivos estáticos optimizados en `frontend-react/dist/` (HTML + CSS + JS minificados).
+- **URLs corregidas:** Se eliminaron todas las referencias hardcodeadas a `http://localhost:3001` en los componentes React (Home, Properties, Agencies). En producción, las imágenes de propiedades y agencias se sirven desde el mismo servidor con rutas relativas.
+- **Cookies/Sesión:** Se agregó `credentials: 'include'` a todas las llamadas `fetch` en `api.js` para que las cookies de sesión se envíen correctamente tanto en desarrollo (a través del proxy de Vite) como en producción.
+- **Reset de contraseña admin:** Se reseteó el hash de la contraseña del admin en la DB local para asegurar que `Admin123!` funcione correctamente.
+
+### Paso 8: Configuración de Express para servir React
+Se modificó `server.js` para detectar automáticamente el entorno:
+- **Si existe `frontend-react/dist/`** → Express sirve el build de React (producción/Render).
+- **Si no existe** → Express sirve el frontend legacy HTML (fallback).
+
+Esto permite que el mismo `server.js` funcione tanto en desarrollo local como en Render sin cambios manuales.
+
+### Paso 9: Configuración de scripts y deploy
+- **`package.json` actualizado** con nuevos scripts:
+  - `build`: instala deps del frontend y ejecuta el build de Vite
+  - `render-start`: inicializa DB + seed + arranca servidor (para Render)
+  - `seed`: ejecuta seedDemo.js por separado
+- **`.gitignore` actualizado**: se removió `dist/` para incluir el build en el repositorio, así Render no necesita ejecutar el build.
+- **Push a GitHub:** Todos los cambios subidos a `git@github.com:LedToro28/proyecto-beta.git`.
+
+### Paso 10: Deploy en Render
+- El frontend React se desplegó exitosamente en https://proyecto-beta-2.onrender.com/
+- El diseño nuevo (sidebar, hero, buscador, cards) se muestra correctamente.
+- **Pendiente del compañero (LedToro28):** Cambiar el **Start Command** en Render a:
+  ```
+  node initDB.js && node seedDemo.js && node server.js
+  ```
+  Esto es necesario porque Render (tier gratuito) tiene disco efímero: la DB SQLite se borra en cada redeploy, así que debe recrearse al arrancar.
+
+### Estado actual verificado en local (localhost:5173)
+- Login como admin: ✅ funciona
+- Dashboard admin mostrando 4 agencias, 9 propiedades, 4 usuarios: ✅
+- Se creó agencia adicional "Solana" desde el panel admin: ✅
+- Propiedades con imágenes, tags, filtros: ✅
+- Todas las páginas navegables y responsive: ✅
+
+---
+
+## Despliegue en Render (Producción)
+
+**URL:** https://proyecto-beta-2.onrender.com/
+
+**Configuración requerida en Render Dashboard:**
+| Campo | Valor |
+|-------|-------|
+| Build Command | `npm install` |
+| Start Command | `node initDB.js && node seedDemo.js && node server.js` |
+| Branch | `main` |
+
+**Nota sobre SQLite en Render:** El tier gratuito de Render tiene almacenamiento efímero. La base de datos `inmobiliaria.db` se pierde en cada redeploy/reinicio. Por eso el Start Command ejecuta `initDB.js` y `seedDemo.js` antes de arrancar el servidor, recreando la DB con datos frescos cada vez. Para una aplicación de producción real se usaría PostgreSQL (Render lo ofrece), pero para la entrega universitaria SQLite con seed automático es suficiente.
+
+---
+
 ## Próximos pasos (opcionales para mejoras)
 
-- [ ] Build de producción (`pnpm build`) y servir desde Express
+- [x] Build de producción (`pnpm build`) y servir desde Express
 - [ ] Mejorar SEO con títulos dinámicos por página
 - [ ] Agregar más propiedades de demo con imágenes reales subidas
 - [ ] Implementar búsqueda funcional en el hero
 - [ ] Agregar edición de propiedades (además de crear/eliminar)
 - [ ] Notificaciones por email al recibir mensajes (nodemailer ya instalado)
+- [ ] Migrar a PostgreSQL para persistencia en Render (producción real)
