@@ -46,7 +46,7 @@ export default function Properties() {
               <div key={prop.id} className="card" onClick={() => setSelected(prop)} style={{ cursor: 'pointer' }}>
                 <div className="card-image">
                   <img
-                    src={prop.portada ? `http://localhost:3001${prop.portada}` : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'}
+                    src={prop.portada || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'}
                     alt={prop.title}
                     loading="lazy"
                   />
@@ -93,7 +93,7 @@ function PropertyModal({ property, onClose }) {
   const [sent, setSent] = useState(false);
 
   const images = property.images?.length
-    ? property.images.map(i => `http://localhost:3001${i}`)
+    ? property.images.map(i => i)
     : ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'];
 
   const handleSend = async (e) => {

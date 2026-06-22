@@ -104,9 +104,66 @@ Roles:
   - invitado → Navegar propiedades/agencias, contactar
 ```
 
-## Comandos de Arranque
+## Base de Datos (SQLite)
 
-Al iniciar el entorno de desarrollo:
+La base de datos es **SQLite** (archivo `inmobiliaria.db`). Está **100% conectada y funcional**: el backend Express (`server.js`) lee y escribe en ella para todas las operaciones (propiedades, agencias, usuarios, mensajes, sesiones).
+
+- El archivo `inmobiliaria.db` se genera localmente al ejecutar `initDB.js` y **no se sube al repositorio** (está en `.gitignore`), lo cual es correcto: cada entorno genera su propia DB.
+- `initDB.js` crea las tablas necesarias (agencies, users, properties, messages) y un usuario administrador por defecto.
+- `seedDemo.js` inserta datos de demostración (3 agencias y 9 propiedades) para que la página no se vea vacía.
+
+### Verificación de la conexión
+
+Cuando se probó el login con `admin` / `Admin123!` en el navegador, redirigió al Dashboard Admin mostrando **3 agencias, 9 propiedades, 3 usuarios**. Esos datos vienen directamente de la base de datos SQLite, confirmando que la conexión backend ↔ DB funciona correctamente.
+
+---
+
+## Clonar y Levantar el Proyecto (para compañeros de equipo)
+
+Si alguien clona el repositorio desde cero, debe ejecutar estos comandos en orden:
+
+```bash
+# 1. Clonar el repositorio
+git clone git@github.com:LedToro28/proyecto-beta.git
+cd proyecto-beta
+
+# 2. Instalar dependencias del backend
+npm install
+
+# 3. Crear la base de datos y el usuario admin
+node initDB.js
+
+# 4. Insertar datos de demostración (agencias y propiedades)
+node seedDemo.js
+
+# 5. Instalar dependencias del frontend React
+cd frontend-react
+pnpm install    # o npm install
+
+# 6. Levantar los servidores (en dos terminales separadas)
+# Terminal 1 - Backend (desde /proyecto-beta):
+node server.js
+
+# Terminal 2 - Frontend (desde /proyecto-beta/frontend-react):
+pnpm dev
+```
+
+Luego acceder a `http://localhost:5173` en el navegador.
+
+### Credenciales de acceso
+
+| Rol | Usuario | Contraseña |
+|-----|---------|------------|
+| Administrador | `admin` | `Admin123!` |
+| Agencia (Caracas) | `invcaracas` | `Agency123!` |
+| Agencia (Valencia) | `hogarpremium` | `Agency123!` |
+| Agencia (Maracaibo) | `tucasamcbo` | `Agency123!` |
+
+---
+
+## Comandos de Arranque (desarrollo diario)
+
+Al iniciar el entorno de desarrollo (la DB ya existe):
 1. **Terminal 1 (Backend):** `cd /root/proyecto-beta && node server.js`
 2. **Terminal 2 (Frontend):** `cd /root/proyecto-beta/frontend-react && pnpm dev`
 

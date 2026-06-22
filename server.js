@@ -274,36 +274,35 @@ app.get('/api/admin/stats', isAuthenticated, isAdmin, (req, res) => {
 });
 
 // ---------- RUTAS DE VISTAS ----------
+const reactDist = path.join(__dirname, 'frontend-react', 'dist');
 const viewsPath = path.join(__dirname, 'public', 'views');
-app.get('/', (req, res) => res.sendFile(path.join(viewsPath, 'index.html')));
-app.get('/propiedades', (req, res) => res.sendFile(path.join(viewsPath, 'propiedades.html')));
-app.get('/agencias', (req, res) => res.sendFile(path.join(viewsPath, 'agencias.html')));
-app.get('/nosotros', (req, res) => res.sendFile(path.join(viewsPath, 'nosotros.html')));
-app.get('/contacto', (req, res) => res.sendFile(path.join(viewsPath, 'contacto.html')));
-app.get('/ingresar', (req, res) => res.sendFile(path.join(viewsPath, 'ingresar.html')));
 
-app.get('/dashboard/admin', isAuthenticated, isAdmin, (req, res) => {
-  res.sendFile(path.join(viewsPath, 'admin-dashboard.html'));
-});
-app.get('/dashboard/agency', isAuthenticated, isAgency, (req, res) => {
-  res.sendFile(path.join(viewsPath, 'agency-dashboard.html'));
-});
-
-// Ruta para perfil público de agencia
-app.get('/agencia/:id', (req, res) => {
-  res.sendFile(path.join(viewsPath, 'agencia-perfil.html'));
-});
-
-// Redirecciones de URLs con extensión .html (opcional)
-app.get('/index.html', (req, res) => res.redirect('/'));
-app.get('/propiedades.html', (req, res) => res.redirect('/propiedades'));
-app.get('/agencias.html', (req, res) => res.redirect('/agencias'));
-app.get('/nosotros.html', (req, res) => res.redirect('/nosotros'));
-app.get('/contacto.html', (req, res) => res.redirect('/contacto'));
-app.get('/ingresar.html', (req, res) => res.redirect('/ingresar'));
-
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.use((req, res) => res.status(404).sendFile(path.join(viewsPath, '404.html')));
+if (fs.existsSync(reactDist)) {
+  // Producción: servir el build de React
+  app.use(express.static(reactDist));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(reactDist, 'index.html'));
+  });
+} else {
+  // Fallback: servir el frontend legacy (HTML vanilla)
+  app.get('/', (req, res) => res.sendFile(path.join(viewsPath, 'index.html')));
+  app.get('/propiedades', (req, res) => res.sendFile(path.join(viewsPath, 'propiedades.html')));
+  app.get('/agencias', (req, res) => res.sendFile(path.join(viewsPath, 'agencias.html')));
+  app.get('/nosotros', (req, res) => res.sendFile(path.join(viewsPath, 'nosotros.html')));
+  app.get('/contacto', (req, res) => res.sendFile(path.join(viewsPath, 'contacto.html')));
+  app.get('/ingresar', (req, res) => res.sendFile(path.join(viewsPath, 'ingresar.html')));
+  app.get('/dashboard/admin', isAuthenticated, isAdmin, (req, res) => {
+    res.sendFile(path.join(viewsPath, 'admin-dashboard.html'));
+  });
+  app.get('/dashboard/agency', isAuthenticated, isAgency, (req, res) => {
+    res.sendFile(path.join(viewsPath, 'agency-dashboard.html'));
+  });
+  app.get('/agencia/:id', (req, res) => {
+    res.sendFile(path.join(viewsPath, 'agencia-perfil.html'));
+  });
+  app.get('/favicon.ico', (req, res) => res.status(204).end());
+  app.use((req, res) => res.status(404).sendFile(path.join(viewsPath, '404.html')));
+}
 
 app.listen(PORT, () => {
   console.log(`✅ Servidor InmoYa Nacional corriendo en http://localhost:${PORT}`);

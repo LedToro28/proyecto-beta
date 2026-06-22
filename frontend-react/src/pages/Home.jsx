@@ -77,7 +77,7 @@ export default function Home() {
 
 function PropertyCard({ property }) {
   const imgSrc = property.portada
-    ? `http://localhost:3001${property.portada}`
+    ? property.portada
     : 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80';
 
   return (

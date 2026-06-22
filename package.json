@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "init-db": "node initDB.js"
+    "init-db": "node initDB.js",
+    "seed": "node seedDemo.js",
+    "build": "cd frontend-react && npm install && npm run build",
+    "render-start": "node initDB.js && node seedDemo.js && node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",

@@ -38,12 +38,12 @@ export default function Agencies() {
             {agencies.map(agency => (
               <div key={agency.id} className="agency-card">
                 <div className="agency-cover">
-                  {agency.cover && <img src={`http://localhost:3001${agency.cover}`} alt="" />}
+                  {agency.cover && <img src={agency.cover} alt="" />}
                 </div>
                 <div className="agency-logo-wrap">
                   <div className="agency-logo">
                     {agency.logo
-                      ? <img src={`http://localhost:3001${agency.logo}`} alt={agency.name} />
+                      ? <img src={agency.logo} alt={agency.name} />
                       : <FaBuildingUser />
                     }
                   </div>

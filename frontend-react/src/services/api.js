@@ -2,6 +2,7 @@ const API_BASE = '/api';
 
 async function request(url, options = {}) {
   const res = await fetch(`${API_BASE}${url}`, {
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json', ...options.headers },
     ...options,
   });
@@ -23,7 +24,7 @@ export const api = {
   // Auth
   login: (username, password) =>
     request('/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
-  logout: () => fetch(`${API_BASE}/logout`).then(() => true),
+  logout: () => fetch(`${API_BASE}/logout`, { credentials: 'include' }).then(() => true),
   getSession: () => request('/session'),
 
   // Agency
