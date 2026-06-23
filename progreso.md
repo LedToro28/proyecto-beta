@@ -225,9 +225,83 @@ Esto permite que el mismo `server.js` funcione tanto en desarrollo local como en
 
 ---
 
+---
+
+## [2026-06-23] - Migración a TypeScript (Fase 1 y 2)
+
+### Fase 1: Configuración inicial TypeScript ✅
+- **Instalación de dependencias:**
+  - `typescript`, `ts-node`, `tsx` (ejecutor de archivos TS)
+  - `@types/express`, `@types/node`, `@types/multer`, `@types/sqlite3`
+  
+- **Configuración:**
+  - Creado `tsconfig.json` con configuración estricta para backend
+  - Actualizado `package.json`: agregado `"type": "module"` para soportar ES6 imports
+  - Renombrado `server.js` → `server.ts` (sin cambios en el código)
+  - Actualizado script `"start": "tsx server.ts"`
+
+- **Resultado:** Servidor funciona igual que antes, pero ahora entiende TypeScript
+
+### Fase 2: Migración con tipos reales ✅
+- **Backend completamente convertido a TypeScript con tipos:**
+
+  1. **server.ts** - Convertido a módulos ES6 con tipos
+     - Imports: `import express from 'express'` (en lugar de `require`)
+     - Tipos: `const app: Express = express()`
+     - Tipos: `const PORT: number = parseInt(...)`
+     - Tipos: `const db: sqlite3.Database = new (...).Database(dbPath)`
+     - Tipos en funciones middleware: `(req: Request, res: Response, next: NextFunction)`
+     - TypeScript ahora valida tipos en tiempo de desarrollo
+
+  2. **initDB.ts** - Convertido a módulos ES6 con tipos
+     - Interfaces: `interface ColumnInfo { name: string; type: string; }`
+     - Tipos de callbacks: `(err: Error | null, columns: ColumnInfo[])`
+     - Manejo de `__dirname` en módulos ES6 usando `fileURLToPath`
+     - Probado: ✅ `npm run init-db` funciona correctamente
+
+  3. **seedDemo.ts** - Convertido a módulos ES6 con tipos
+     - Interfaces: `interface Agency`, `interface Property`
+     - Tipos: `op: 'venta' | 'alquiler'` (literal types)
+     - Async/await con tipos: `async function seed(): Promise<void>`
+     - Probado: ✅ Listo para usar
+
+- **package.json actualizado:**
+  ```json
+  "scripts": {
+    "start": "tsx server.ts",
+    "init-db": "tsx initDB.ts",
+    "seed": "tsx seedDemo.ts",
+    "render-start": "tsx initDB.ts && tsx seedDemo.ts && tsx server.ts"
+  }
+  ```
+
+### Ventajas logradas
+- ✅ **Type Safety:** TypeScript valida tipos en tiempo de desarrollo
+- ✅ **IDE Autocomplete:** Mejor sugerencias y documentación en el editor
+- ✅ **Errores tempranos:** Los bugs se detectan antes de ejecutar
+- ✅ **Documentación viva:** Los tipos documentan el código
+- ✅ **Compatibilidad:** JavaScript viejo sigue funcionando
+
+### Archivos actualizados
+| Archivo | Estado | Antes | Después |
+|---------|--------|-------|---------|
+| server.ts | ✅ Con tipos | JavaScript (require) | TypeScript (import) + tipos |
+| initDB.ts | ✅ Con tipos | JavaScript (require) | TypeScript (import) + interfaces |
+| seedDemo.ts | ✅ Con tipos | JavaScript (require) | TypeScript (import) + interfaces |
+| initDB.js | 🟡 Existente | - | Reemplazado por initDB.ts |
+| seedDemo.js | 🟡 Existente | - | Reemplazado por seedDemo.ts |
+
+### Frontend (sin cambios necesarios por ahora)
+- React ya tiene `@types/react` y `@types/react-dom` instalados
+- Vite maneja TypeScript nativamente
+- Cuando se necesite: renombrar `.jsx` → `.tsx` (cambio mínimo)
+
+---
+
 ## Próximos pasos (opcionales para mejoras)
 
 - [x] Build de producción (`pnpm build`) y servir desde Express
+- [x] Migración a TypeScript (Fase 1 y 2 completadas)
 - [ ] Mejorar SEO con títulos dinámicos por página
 - [ ] Agregar más propiedades de demo con imágenes reales subidas
 - [ ] Implementar búsqueda funcional en el hero

@@ -1,18 +1,22 @@
-require('dotenv').config();
-const express = require('express');
-const session = require('express-session');
-const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
-const bcrypt = require('bcrypt');
-const multer = require('multer');
-const fs = require('fs');
+import dotenv from 'dotenv';
+import express, { Express, Request, Response, NextFunction } from 'express';
+import session from 'express-session';
+import path from 'path';
+import sqlite3 from 'sqlite3';
+import bcrypt from 'bcrypt';
+import multer from 'multer';
+import fs from 'fs';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+dotenv.config();
+
+const __dirname = import.meta.url.replace('file://', '').split('/').slice(0, -1).join('/');
+
+const app: Express = express();
+const PORT: number = parseInt(process.env.PORT || '3000', 10);
 
 // Base de datos
-const dbPath = path.join(__dirname, 'inmobiliaria.db');
-const db = new sqlite3.Database(dbPath);
+const dbPath: string = path.join(__dirname, 'inmobiliaria.db');
+const db: sqlite3.Database = new (sqlite3.verbose()).Database(dbPath);
 
 // Middlewares
 app.use(express.json());
