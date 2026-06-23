@@ -17,7 +17,7 @@ const db = new sqlite3.Database(dbPath);
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 app.use(session({
   secret: 'clave_super_secreta_inmoya',
   resave: false,
@@ -285,6 +285,7 @@ if (fs.existsSync(reactDist)) {
   });
 } else {
   // Fallback: servir el frontend legacy (HTML vanilla)
+  app.use(express.static(path.join(__dirname, 'public')));
   app.get('/', (req, res) => res.sendFile(path.join(viewsPath, 'index.html')));
   app.get('/propiedades', (req, res) => res.sendFile(path.join(viewsPath, 'propiedades.html')));
   app.get('/agencias', (req, res) => res.sendFile(path.join(viewsPath, 'agencias.html')));
