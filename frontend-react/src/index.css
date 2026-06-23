@@ -751,6 +751,41 @@ input, select, textarea { font-family: inherit; }
 }
 .btn-danger:hover { opacity: 0.85; }
 
+.actions-group {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+.btn-action:active { transform: scale(0.92); }
+.btn-action.edit {
+  background: rgba(108, 92, 231, 0.12);
+  color: var(--primary);
+}
+.btn-action.edit:hover {
+  background: var(--primary);
+  color: white;
+}
+.btn-action.delete {
+  background: rgba(229, 62, 62, 0.1);
+  color: var(--danger);
+}
+.btn-action.delete:hover {
+  background: var(--danger);
+  color: white;
+}
+
 .btn-outline {
   background: transparent;
   color: var(--primary);

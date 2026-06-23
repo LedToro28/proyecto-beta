@@ -39,7 +39,9 @@ export const api = {
   // Admin
   getAdminAgencies: () => request('/admin/agencies'),
   createAgency: (formData) =>
-    fetch(`${API_BASE}/admin/agencies`, { method: 'POST', body: formData }),
+    fetch(`${API_BASE}/admin/agencies`, { method: 'POST', body: formData, credentials: 'include' }),
+  updateAgency: (id, formData) =>
+    fetch(`${API_BASE}/admin/agencies/${id}`, { method: 'PUT', body: formData, credentials: 'include' }),
   deleteAgency: (id) =>
     request(`/admin/agencies/${id}`, { method: 'DELETE' }),
   getAdminStats: () => request('/admin/stats'),

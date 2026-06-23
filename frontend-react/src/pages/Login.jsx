@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FaHouseChimney } from 'react-icons/fa6';
 import { useSession } from '../hooks/useSession.jsx';
 
@@ -65,6 +65,20 @@ export default function Login() {
         <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.82rem', color: '#718096' }}>
           ¿No tienes cuenta? Contacta al administrador.
         </p>
+
+        <Link to="/" style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+          marginTop: '1rem', padding: '0.6rem 1.2rem', borderRadius: '8px',
+          background: 'rgba(108, 92, 231, 0.1)', border: '1px solid rgba(108, 92, 231, 0.3)',
+          color: '#6c5ce7', textDecoration: 'none', fontSize: '0.9rem',
+          transition: 'all 0.2s ease'
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(108, 92, 231, 0.2)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(108, 92, 231, 0.1)'; }}
+        >
+          <FaHouseChimney style={{ fontSize: '1rem' }} />
+          Volver al inicio
+        </Link>
       </div>
     </div>
   );

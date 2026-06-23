@@ -8,8 +8,8 @@
     "start": "tsx server.ts",
     "init-db": "tsx initDB.ts",
     "seed": "tsx seedDemo.ts",
-    "build": "cd frontend-react && npm install && npm run build",
-    "render-start": "tsx initDB.ts && tsx seedDemo.ts && tsx server.ts"
+    "build": "cd frontend-react && pnpm install && pnpm run build",
+    "deploy": "tsx initDB.ts && tsx seedDemo.ts && tsx server.ts"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -18,13 +18,15 @@
     "express-session": "^1.17.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.4",
-    "sqlite3": "^5.1.6"
+    "pg": "^8.22.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
     "@types/multer": "^2.1.0",
     "@types/node": "^26.0.0",
-    "@types/sqlite3": "^3.1.11",
+    "@types/pg": "^8.20.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"

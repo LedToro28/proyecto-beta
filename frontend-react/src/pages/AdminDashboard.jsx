@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaBuildingUser, FaBuilding, FaUsers, FaPlus, FaTrash, FaXmark } from 'react-icons/fa6';
+import { FaBuildingUser, FaBuilding, FaUsers, FaPlus, FaTrash, FaPenToSquare, FaXmark } from 'react-icons/fa6';
 import { api } from '../services/api';
 
 export default function AdminDashboard() {
@@ -7,6 +7,7 @@ export default function AdminDashboard() {
   const [agencies, setAgencies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [editAgency, setEditAgency] = useState(null);
 
   const load = async () => {
     try {
@@ -73,7 +74,12 @@ export default function AdminDashboard() {
                       <td>{a.email}</td>
                       <td>{a.phone || '-'}</td>
                       <td>{a.user_count}</td>
-                      <td><button className="btn-danger" onClick={() => handleDelete(a.id, a.name)}><FaTrash /> Eliminar</button></td>
+                      <td>
+                        <div className="actions-group">
+                          <button className="btn-action edit" title="Editar" onClick={() => setEditAgency(a)}><FaPenToSquare /></button>
+                          <button className="btn-action delete" title="Eliminar" onClick={() => handleDelete(a.id, a.name)}><FaTrash /></button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -84,6 +90,7 @@ export default function AdminDashboard() {
       </section>
 
       {showModal && <NewAgencyModal onClose={() => setShowModal(false)} onCreated={() => { setShowModal(false); load(); }} />}
+      {editAgency && <EditAgencyModal agency={editAgency} onClose={() => setEditAgency(null)} onSaved={() => { setEditAgency(null); load(); }} />}
     </>
   );
 }
@@ -146,6 +153,75 @@ function NewAgencyModal({ onClose, onCreated }) {
             <div className="form-group"><label>Confirmar *</label><input type="password" required value={form.confirm_password} onChange={e => update('confirm_password', e.target.value)} /></div>
           </div>
           <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Guardando...' : 'Registrar Agencia'}</button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function EditAgencyModal({ agency, onClose, onSaved }) {
+  const [form, setForm] = useState({
+    name: agency.name || '',
+    email: agency.email || '',
+    phone: agency.phone || '',
+    address: agency.address || ''
+  });
+  const [logo, setLogo] = useState(null);
+  const [cover, setCover] = useState(null);
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const update = (field, value) => setForm({ ...form, [field]: value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setError('');
+
+    const fd = new FormData();
+    Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+    if (logo) fd.append('logo', logo);
+    if (cover) fd.append('cover', cover);
+
+    try {
+      const res = await api.updateAgency(agency.id, fd);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      onSaved();
+    } catch (err) {
+      setError(err.message);
+    }
+    setSaving(false);
+  };
+
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 style={{ margin: 0 }}>Editar Agencia</h2>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', color: '#718096', cursor: 'pointer' }}><FaXmark /></button>
+        </div>
+
+        {error && <div className="login-error" style={{ marginTop: '1rem' }}>{error}</div>}
+
+        <form onSubmit={handleSubmit} style={{ marginTop: '1rem' }}>
+          <div className="form-group"><label>Nombre de la agencia *</label><input required value={form.name} onChange={e => update('name', e.target.value)} /></div>
+          <div className="form-group"><label>Email *</label><input type="email" required value={form.email} onChange={e => update('email', e.target.value)} /></div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-group"><label>Teléfono</label><input value={form.phone} onChange={e => update('phone', e.target.value)} /></div>
+            <div className="form-group"><label>Dirección</label><input value={form.address} onChange={e => update('address', e.target.value)} /></div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-group">
+              <label>Logo {agency.logo && <span style={{ fontSize: '0.75rem', color: '#718096' }}>(actual: tiene)</span>}</label>
+              <input type="file" accept="image/*" onChange={e => setLogo(e.target.files[0])} />
+            </div>
+            <div className="form-group">
+              <label>Portada {agency.cover && <span style={{ fontSize: '0.75rem', color: '#718096' }}>(actual: tiene)</span>}</label>
+              <input type="file" accept="image/*" onChange={e => setCover(e.target.files[0])} />
+            </div>
+          </div>
+          <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Guardando...' : 'Guardar Cambios'}</button>
         </form>
       </div>
     </div>
