@@ -1,3 +1,8 @@
+Aquí tienes el contenido completo y actualizado de `progreso.md`. Cópialo y pégalo directamente en tu archivo `progreso.md`, reemplazando todo el contenido existente:
+
+---
+
+```markdown
 # Registro de Progreso - Proyecto Beta (InmoYa / Inmonacional)
 
 Este documento registra el progreso paso a paso de la migración a React (Vite) y cualquier cambio importante en el proyecto.
@@ -222,8 +227,6 @@ Esto permite que el mismo `server.js` funcione tanto en desarrollo local como en
 | Branch | `main` |
 
 **Nota sobre SQLite en Render:** El tier gratuito de Render tiene almacenamiento efímero. La base de datos `inmobiliaria.db` se pierde en cada redeploy/reinicio. Por eso el Start Command ejecuta `initDB.js` y `seedDemo.js` antes de arrancar el servidor, recreando la DB con datos frescos cada vez. Para una aplicación de producción real se usaría PostgreSQL (Render lo ofrece), pero para la entrega universitaria SQLite con seed automático es suficiente.
-
----
 
 ---
 
@@ -608,16 +611,78 @@ proyecto-beta/
 
 ---
 
-## Próximos pasos (opcionales para mejoras)
+## [2026-07-11 / 12] - Mejoras en UI, Filtros y Paginación
+
+Esta sección documenta los cambios realizados en julio de 2026 para optimizar la experiencia de usuario y la funcionalidad de búsqueda.
+
+### Cambios realizados:
+
+#### 1. Vista de Inicio (Home)
+- **Eliminada la barra de búsqueda** del hero (ciudad, tipo, operación y botón "Buscar").
+- El hero ahora solo muestra el título y subtítulo, simplificando la página de inicio.
+- Se mantiene la sección de "Propiedades Destacadas" que muestra solo propiedades con `destacada = true`.
+
+#### 2. Vista de Propiedades (Properties)
+- **Nueva barra de filtros** con:
+  - Campo de texto para buscar por ubicación/ciudad (búsqueda en tiempo real).
+  - Selector de tipo de inmueble: Casa, Apartamento, Terreno, Local, Oficina.
+  - Selector de operación: Venta, Alquiler.
+- **Filtros combinados**: todos los filtros se aplican simultáneamente y la lista se actualiza en tiempo real (sin recargar la página) usando `useMemo`.
+- **Botones rápidos**: "Todas", "En Venta", "En Alquiler" que actúan como atajos para el selector de operación.
+- **Paginación**: se muestran 9 propiedades por página con controles "Anterior" / "Siguiente" e indicador de página actual. La página se reinicia al cambiar los filtros y se hace scroll suave al inicio de la sección.
+
+#### 3. Dashboard de Agencia (AgencyDashboard)
+- **Rediseño completo**: ahora tiene el mismo estilo que la vista de perfil de agencia (`AgencyProfile`), con cabecera que muestra cover, logo, nombre y datos de contacto.
+- **Propiedades en tarjetas**: en lugar de tabla, ahora las propiedades se muestran en un grid de tarjetas con imagen, título, ubicación, precio, características y botones de acción.
+- **Botones de acción mejorados**:
+  - **Destacar / Desdestacar**: botón con estrella que alterna el estado `destacada` de la propiedad. Cambia de color y texto según el estado.
+  - **Editar**: abre un modal con los datos precargados para modificar título, descripción, operación, precio, ubicación, habitaciones, baños, área e imágenes (opcional).
+  - **Eliminar**: elimina la propiedad con confirmación previa.
+- **Funcionalidad de edición completamente funcional**: el modal de edición permite actualizar todos los campos y las imágenes (subiendo nuevas o manteniendo las existentes). Los cambios se reflejan inmediatamente en el dashboard gracias a la recarga automática.
+
+#### 4. Backend (server.ts)
+- **Nuevo endpoint `PUT /api/agency/properties/:id/toggle-destacada`**: alterna el valor de `destacada` entre 0 y 1, validando que la propiedad pertenezca a la agencia autenticada.
+- **Endpoint de edición `PUT /api/agency/properties/:id`**: actualiza todos los campos de una propiedad, incluyendo imágenes (opcional). Sanitiza los valores numéricos para evitar errores de tipo en PostgreSQL.
+- **Corrección de sanitización de números**: se agregó la función `toNumberOrNull` para convertir strings vacíos o `undefined` a `null` en campos como `price`, `rooms`, `baths`, `area`, evitando errores `invalid input syntax for type integer`.
+- **Mejora en GET `/api/agency/properties`**: ahora devuelve también el campo `portada` (primera imagen) para facilitar la visualización en el frontend.
+
+#### 5. Archivos modificados
+- `frontend-react/src/pages/Home.jsx` → eliminada barra de búsqueda.
+- `frontend-react/src/pages/Properties.jsx` → añadidos filtros y paginación.
+- `frontend-react/src/pages/AgencyDashboard.jsx` → rediseño completo con tarjetas, botones de destacar/editar/eliminar, y modal de edición.
+- `frontend-react/src/services/api.js` → añadido método `updateProperty` para editar propiedades.
+- `server.ts` → nuevos endpoints para editar y destacar, y mejoras en sanitización.
+- `frontend-react/src/index.css` → se añadieron estilos para los nuevos botones y tarjetas del dashboard, y se ajustaron estilos responsive.
+
+### Funcionalidades actualizadas
+| Funcionalidad | Estado |
+|---|---|
+| Hero sin buscador en Home | ✅ |
+| Filtros combinados en Properties | ✅ |
+| Paginación en Properties (9 por página) | ✅ |
+| Dashboard de agencia con tarjetas | ✅ |
+| Botón Destacar/Desdestacar | ✅ |
+| Edición de propiedades | ✅ |
+| Eliminación de propiedades | ✅ |
+| Sanitización de datos en backend | ✅ |
+
+---
+
+## Próximos pasos (pendientes)
 
 - [x] Build de producción (`pnpm build`) y servir desde Express
 - [x] Migración a TypeScript (Fase 1 y 2 completadas)
 - [x] Migración a PostgreSQL para persistencia real
 - [x] Deploy en VPS propio con dominio y SSL
 - [x] CRUD completo de agencias (crear, editar, eliminar)
+- [x] Hero sin buscador en Home
+- [x] Filtros avanzados y paginación en Properties
+- [x] Dashboard de agencia con tarjetas, destacar y editar
+- [ ] **Modal de propiedades reutilizable**: extraer `PropertyModal` a un componente compartido para usarlo en `Properties`, `AgencyProfile`, `AgencyDashboard` y `Home`.
 - [ ] Mejorar SEO con títulos dinámicos por página
 - [ ] Agregar más propiedades de demo con imágenes reales subidas
-- [ ] Implementar búsqueda funcional en el hero
-- [ ] Agregar edición de propiedades (además de crear/eliminar)
+- [ ] Implementar búsqueda funcional en el hero (si se decide restaurar)
 - [ ] Notificaciones por email al recibir mensajes (nodemailer ya instalado)
 - [ ] Migrar frontend .jsx → .tsx para TypeScript completo
+- [ ] Agregar confirmación al eliminar propiedades (ya implementado)
+- [ ] Paginación en el backend para optimizar rendimiento (actualmente es frontend)
