@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InmoYa | Ingresar</title>
+    <link rel="stylesheet" href="/css/ingresar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="hamburger" id="hamburgerBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo"><i class="fa-solid fa-house-chimney"></i> <span>InmoYa</span></div>
+        <div class="nav-links">
+            <a href="/"><i class="fa-solid fa-home"></i> Inicio</a>
+            <a href="/propiedades"><i class="fa-solid fa-building"></i> Propiedades</a>
+            <a href="/agencias"><i class="fa-solid fa-building-user"></i> Agencias</a>
+            <a href="/nosotros"><i class="fa-solid fa-users"></i> Nosotros</a>
+            <a href="/contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
+        </div>
+        <div class="user-profile" id="loginPrompt">
+            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info"><strong>Invitado</strong><span>Inicia sesión</span></div>
+            <a href="/ingresar" class="btn-logout"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        </div>
+        <div class="user-profile" id="userProfile" style="display: none;">
+            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info"><strong id="userName"></strong><span id="userRole"></span></div>
+            <button id="logoutBtn" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="login-center">
+            <div class="login-card">
+                <h2>Iniciar sesión</h2>
+                <p>Accede a tu cuenta de agencia o administrador</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" id="username" name="username" required placeholder="Ingresa tu usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" required placeholder="Contraseña">
+                    </div>
+                    <button type="submit" class="btn-submit">Ingresar</button>
+                    <div id="loginError" class="error-message"></div>
+                </form>
+                <div class="demo-info">
+                    <p><strong>Demo:</strong><br>
+                    Admin: usuario <code>admin</code> contraseña <code>Admin123!</code><br>
+                    (Las agencias se crean desde el panel admin)</p>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2026 InmoYa - Tu hogar nos importa</p>
+        </footer>
+    </main>
+
+    <script src="/js/session.js"></script>
+    <script src="/js/ingresar.js"></script>
+</body>
+</html>

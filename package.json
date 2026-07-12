@@ -1,0 +1,34 @@
+{
+  "name": "inmonacional",
+  "version": "1.0.0",
+  "description": "Sistema inmobiliario con roles",
+  "type": "module",
+  "main": "server.ts",
+  "scripts": {
+    "start": "tsx server.ts",
+    "init-db": "tsx initDB.ts",
+    "seed": "tsx seedDemo.ts",
+    "build": "cd frontend-react && pnpm install && pnpm run build",
+    "deploy": "tsx initDB.ts && tsx seedDemo.ts && tsx server.ts"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.4",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^26.0.0",
+    "@types/pg": "^8.20.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

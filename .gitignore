@@ -1,0 +1,6 @@
+node_modules/
+.env
+inmobiliaria.db
+public/uploads/
+.DS_Store
+*.log

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InmoYa | Agencias</title>
+    <link rel="stylesheet" href="/css/agencias.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="hamburger" id="hamburgerBtn">☰</button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo"><i class="fa-solid fa-house-chimney"></i> <span>InmoYa</span></div>
+        <div class="nav-links">
+            <a href="/"><i class="fa-solid fa-home"></i> Inicio</a>
+            <a href="/propiedades"><i class="fa-solid fa-building"></i> Propiedades</a>
+            <a href="/agencias" class="active"><i class="fa-solid fa-building-user"></i> Agencias</a>
+            <a href="/nosotros"><i class="fa-solid fa-users"></i> Nosotros</a>
+            <a href="/contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
+        </div>
+        <div class="user-profile" id="loginPrompt">
+            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info"><strong>Invitado</strong><span>Inicia sesión</span></div>
+            <a href="/ingresar" class="btn-logout"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+        </div>
+        <div class="user-profile" id="userProfile" style="display: none;">
+            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="user-info"><strong id="userName"></strong><span id="userRole"></span></div>
+            <button id="logoutBtn" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="agencies-header">
+            <h1>Agencias Inmobiliarias</h1>
+            <p>Las mejores inmobiliarias del país, aliadas para encontrar tu hogar</p>
+        </div>
+        <div class="grid-agencies" id="agencies-grid">
+            <div class="loading">Cargando agencias...</div>
+        </div>
+        <footer>
+            <p>&copy; 2026 InmoYa - Tu hogar nos importa</p>
+        </footer>
+    </main>
+
+    <script src="/js/session.js"></script>
+    <script src="/js/agencias.js"></script>
+</body>
+</html>
