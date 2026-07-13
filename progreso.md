@@ -686,3 +686,32 @@ Esta sección documenta los cambios realizados en julio de 2026 para optimizar l
 - [ ] Migrar frontend .jsx → .tsx para TypeScript completo
 - [ ] Agregar confirmación al eliminar propiedades (ya implementado)
 - [ ] Paginación en el backend para optimizar rendimiento (actualmente es frontend)
+
+---
+
+## [Completado] Configuración de Acceso Remoto a Base de Datos (PostgreSQL)
+
+Para permitir que el desarrollador asociado pueda consumir la base de datos del VPS desde su entorno local (`localhost:3001` hacia la DB en `109.199.117.161`), se ejecutaron los siguientes pasos de seguridad. Esto evita exponer la base de datos al internet abierto.
+
+### Estado Actual:
+- **Completado:** Acceso abierto a todas las IPs (`0.0.0.0/0`) temporalmente por problemas de IP dinámica del equipo de desarrollo.
+- **⚠️ TAREA PENDIENTE:** En unos días se debe revertir este cambio, cerrando el acceso universal (`0.0.0.0/0`) en el Firewall y en `pg_hba.conf` para volver a blindar la base de datos de producción.
+
+### Pasos ejecutados en el VPS:
+
+1. **Permitir escucha global en PostgreSQL:**
+   - Archivo: `/etc/postgresql/16/main/postgresql.conf`
+   - Acción: `listen_addresses = '*'`
+
+2. **Añadir regla de acceso (pg_hba.conf):**
+   - Archivo: `/etc/postgresql/16/main/pg_hba.conf`
+   - Código agregado: 
+     ```text
+     host    inmoya_db       inmoya          0.0.0.0/0                scram-sha-256
+     ```
+
+3. **Abrir el puerto en el Firewall (UFW):**
+   - Comando ejecutado: `sudo ufw allow 5432/tcp`
+
+4. **Reiniciar el servicio:**
+   - Comando ejecutado: `sudo systemctl restart postgresql`
