@@ -450,16 +450,8 @@ pnpm run seed
 pnpm run start
 ```
 
-**Opción B: Conectarse a la DB del VPS (más fácil, necesita internet)**
-```bash
-# Configurar .env apuntando al VPS
-echo "PORT=3001" > .env
-echo "DATABASE_URL=postgresql://inmoya:InmoYa2026_Prod!@109.199.117.161:5432/inmoya_db" >> .env
-
-pnpm install
-pnpm run start
-```
-*(Nota: Requiere que PostgreSQL en el VPS acepte conexiones remotas, pedir a Pedro que lo configure)*
+**Opción B: Conectarse a la DB del VPS — ⚠️ YA NO DISPONIBLE**
+> El acceso remoto a PostgreSQL fue cerrado por seguridad. El puerto 5432 ya no acepta conexiones externas. Usar la **Opción A** (PostgreSQL local) para desarrollo local.
 
 ### Flujo para subir cambios a producción (VPS):
 1. Haz tus cambios normalmente
